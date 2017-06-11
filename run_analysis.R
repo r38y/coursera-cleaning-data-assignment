@@ -20,6 +20,7 @@ loadData <- function(filename) {
 
 # Label data
 activityLabels <- loadData("activity_labels.txt") # 6 rows
+activityLabels[,name:= lapply(gsub("_", " ", V2), tolower)]
 colNames <- loadData("features.txt") # 561 rows
 
 # Train data
@@ -31,7 +32,7 @@ trainReadings <- loadData("train/X_train.txt") # 561 cols
 names(trainReadings) <- as.vector(colNames[, V2])
 
 # add activity
-trainActivityNames <- activityLabels[as.vector(trainActivities[, V1]), V2]
+trainActivityNames <- activityLabels[as.vector(trainActivities[, V1]), name]
 trainReadings[, activity:=trainActivityNames]
 
 # add subject
