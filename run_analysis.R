@@ -31,7 +31,8 @@ trainReadings <- loadData("train/X_train.txt") # 561 cols
 names(trainReadings) <- as.vector(colNames[, V2])
 
 # add activity
-trainReadings[, activity:=as.vector(trainActivities[, V1])]
+trainActivityNames <- activityLabels[as.vector(trainActivities[, V1]), V2]
+trainReadings[, activity:=trainActivityNames]
 
 # add subject
 trainReadings[, subject:=as.vector(trainSubjectNumbers[, V1])]
