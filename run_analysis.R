@@ -51,5 +51,19 @@ names(readings) <- gsub("\\(\\)", "", names(readings))
 names(readings) <- gsub("^t{1}", "time_", names(readings))
 names(readings) <- gsub("^f{1}", "frequency_", names(readings))
 
-# Write the new data set to disk
+# Write the new data set to disk for future reference
 writeDataTable(readings, "readings.csv")
+
+# Create a tidy data set with the average of each variable for each activity and each subject
+
+library(reshape2)
+
+# Melt with id of subject and activity since we are looking for the mean for each combination of
+# activty and subject
+melted <- melt(readings, id=c("subject", "activity"))
+
+# This takes the melted data and finds the mean for each of the variables grouped by [subject, activity]
+# There should be 180 rows since there are 30 subjects and 6 activities. 
+reshaped <- dcast(melted, subject + activity ~ variable, mean)
+
+writeDataTable(reshaped, "variable_means_by_subject_and_activity.csv")
