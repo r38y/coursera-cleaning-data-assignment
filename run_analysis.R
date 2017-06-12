@@ -1,21 +1,22 @@
-
+# The results from running this script will be saved in ./output
 # Misc helper functions are defined at the bottom of the file
+
 # Download and unzip data
 
 downloadData()
 
 # Label data
 
-activityLabels <- loadData("activity_labels.txt") # 6 rows
+activityLabels <- loadData("activity_labels.txt")
 activityLabels[,name:= lapply(gsub("_", " ", V2), tolower)]
-colNames <- loadData("features.txt") # 561 rows
+colNames <- loadData("features.txt")
 colNames <- as.vector(colNames[, V2])
 
 # Train data
 
 trainActivities <- loadData("train/y_train.txt")
 trainSubjectNumbers <- loadData("train/subject_train.txt")
-trainReadings <- loadData("train/X_train.txt") # 561 cols
+trainReadings <- loadData("train/X_train.txt")
 
 trainReadings <- mergeData(trainReadings, trainSubjectNumbers, trainActivities)
 
@@ -23,7 +24,7 @@ trainReadings <- mergeData(trainReadings, trainSubjectNumbers, trainActivities)
 
 testActivities <- loadData("test/y_test.txt")
 testSubjectNumbers <- loadData("test/subject_test.txt")
-testReadings <- loadData("test/X_test.txt") # 561 cols
+testReadings <- loadData("test/X_test.txt")
 
 testReadings <- mergeData(testReadings, testSubjectNumbers, testActivities)
 
