@@ -35,5 +35,5 @@ downloadData <- function() {
 writeDataTable <- function(dt, filename) {
   if(!file.exists("./output")) { dir.create("./output")}
   path <- paste("./output", filename, sep = "/")
-  write.csv(dt, file = path)
+  write.table(dt, file = path, row.name = FALSE)
 }

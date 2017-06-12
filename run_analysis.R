@@ -1,6 +1,7 @@
 # The results from running this script will be saved in ./output
 
 library(dplyr)
+library(reshape2)
 source("helper_functions.R")
 
 # Download and unzip data
@@ -55,8 +56,6 @@ names(readings) <- gsub("^f{1}", "frequency_", names(readings))
 writeDataTable(readings, "readings.csv")
 
 # Create a tidy data set with the average of each variable for each activity and each subject
-
-library(reshape2)
 
 # Melt with id of subject and activity since we are looking for the mean for each combination of
 # activty and subject
