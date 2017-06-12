@@ -1,3 +1,5 @@
+
+# Misc helper functions are defined at the bottom of the file
 # Download and unzip data
 
 downloadData()
@@ -26,8 +28,21 @@ testReadings <- loadData("test/X_test.txt") # 561 cols
 testReadings <- mergeData(testReadings, testSubjectNumbers, testActivities)
 
 # Combine the data
+readings <- rbind(trainReadings, testReadings)
+
+# Subset to just mean and std
+readings <- subset(readings, select = grep("[a-zA-Z]+-(std|mean)\\(\\).*|subject|activity", names(readings)))
+
+# Clean up column names
+names(readings) <- gsub("-", "_", names(readings))
+names(readings) <- gsub("\\(\\)", "", names(readings))
+names(readings) <- gsub("\\(\\)", "", names(readings))
+names(readings) <- gsub("^t{1}", "time_", names(readings))
+names(readings) <- gsub("^f{1}", "frequency_", names(readings))
 
 # Write the new data set to disk
+
+writeDataTable(readings, "readings.csv")
 
 # Helper functions
 
@@ -62,4 +77,10 @@ downloadData <- function() {
   if (file.exists(zipFile)) {
     file.remove(zipFile)
   } 
+}
+
+writeDataTable <- function(dt, filename) {
+  if(!file.exists("./output")) { dir.create("./output")}
+  path <- paste("./output", filename, sep = "/")
+  fwrite(dt, file = path)
 }
