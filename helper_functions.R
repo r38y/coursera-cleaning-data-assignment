@@ -1,7 +1,7 @@
 # Helper functions
 
 loadData <- function(filename) {
-  read.table(paste("./data/UCI HAR Dataset/", filename, sep = ""))
+  tbl_df(read.table(paste("./data/UCI HAR Dataset/", filename, sep = "")))
 }
 
 mergeData <- function(readings, subjectNumbers, activities, variableNames, activityLabels) {
